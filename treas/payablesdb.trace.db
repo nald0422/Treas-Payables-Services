@@ -1,0 +1,9 @@
+2020-03-05 16:41:45 jdbc[55]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * HO_BRANCH[*]"; SQL statement:
+SELECT * HO_BRANCH [42000-200]
+2020-03-05 16:41:46 jdbc[55]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * HO_BRANCH[*]"; SQL statement:
+SELECT * HO_BRANCH [42000-200]
+2020-03-05 16:41:47 jdbc[55]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * HO_BRANCH[*]"; SQL statement:
+SELECT * HO_BRANCH [42000-200]
