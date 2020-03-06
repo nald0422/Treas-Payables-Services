@@ -3,7 +3,7 @@ package tmc.tres.payables.model;
 import javax.persistence.*;
 
 @Entity
-public class ho_branch {
+public class Designation {
 	
 	@Id
 	private int designationId;
