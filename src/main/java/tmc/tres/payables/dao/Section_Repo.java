@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
-import tmc.tres.payables.model.Designation;
+import tmc.tres.payables.model.Section;
 
-public interface ho_branch_repo extends JpaRepository<Designation, Integer>{
+public interface Section_Repo extends JpaRepository<Section, Integer>{
 
-	List<Designation> findBydesignationCode(String designation);
+	List<Section> findBysectionCode(String section);
 	
 }

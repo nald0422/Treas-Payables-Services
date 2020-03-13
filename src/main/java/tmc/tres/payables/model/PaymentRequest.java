@@ -2,85 +2,102 @@ package tmc.tres.payables.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
 public class PaymentRequest {
 	
+	@Id
+	@GeneratedValue
+	@Column(name = "paymentRequestNo", updatable = false, nullable = false)
+	private int paymentRequestNo;      
+	@JsonFormat
+    (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date dateReceived;
-    private Date dateDue;
-    private String Ho_Branch;
-    private String Branch_Department;
-    private String expenseCode;
-    private String particulars;
-    private int amount;
-    private String payee;
-    
+	@JsonFormat
+    (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	private Date dateDue;
+	
+	@ManyToOne
+	@JoinColumn(name = "designationCode")
+	private	Designation designationCode;
+	@ManyToOne
+	@JoinColumn(name = "sectionCode")
+	private Section sectionCode;
+	@ManyToOne
+	@JoinColumn(name = "expenseCode")
+	private Expense expenseCode;
+	
+	private String particulars;
+	private long amount;
+	private String Payee;
+	public int getPaymentRequestNo() {
+		return paymentRequestNo;
+	}
+	public void setPaymentRequestNo(int paymentRequestNo) {
+		this.paymentRequestNo = paymentRequestNo;
+	}
 	public Date getDateReceived() {
 		return dateReceived;
 	}
-	
 	public void setDateReceived(Date dateReceived) {
 		this.dateReceived = dateReceived;
 	}
-	
 	public Date getDateDue() {
 		return dateDue;
 	}
-	
 	public void setDateDue(Date dateDue) {
 		this.dateDue = dateDue;
 	}
-	
-	public String getHo_Branch() {
-		return Ho_Branch;
+	public Designation getDesignationCode() {
+		return designationCode;
 	}
-	
-	public void setHo_Branch(String ho_Branch) {
-		Ho_Branch = ho_Branch;
+	public void setDesignationCode(Designation designationCode) {
+		this.designationCode = designationCode;
 	}
-	
-	public String getBranch_Department() {
-		return Branch_Department;
+	public Section getSectionCode() {
+		return sectionCode;
 	}
-	
-	public void setBranch_Department(String branch_Department) {
-		Branch_Department = branch_Department;
+	public void setSectionCode(Section sectionCode) {
+		this.sectionCode = sectionCode;
 	}
-	
-	public String getExpenseCode() {
+	public Expense getExpenseCode() {
 		return expenseCode;
 	}
-	
-	public void setExpenseCode(String expenseCode) {
+	public void setExpenseCode(Expense expenseCode) {
 		this.expenseCode = expenseCode;
 	}
-	
 	public String getParticulars() {
 		return particulars;
 	}
-	
 	public void setParticulars(String particulars) {
 		this.particulars = particulars;
 	}
-	
-	public int getAmount() {
+	public long getAmount() {
 		return amount;
 	}
-	
-	public void setAmount(int amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
-	
 	public String getPayee() {
-		return payee;
+		return Payee;
 	}
-	
 	public void setPayee(String payee) {
-		this.payee = payee;
+		Payee = payee;
 	}
-
 	@Override
 	public String toString() {
-		return "PaymentRequest [dateReceived=" + dateReceived + ", dateDue=" + dateDue + ", Ho_Branch=" + Ho_Branch
-				+ ", Branch_Department=" + Branch_Department + ", expenseCode=" + expenseCode + ", particulars="
-				+ particulars + ", amount=" + amount + ", payee=" + payee + "]";
+		return "PaymentRequest [paymentRequestNo=" + paymentRequestNo + ", dateReceived=" + dateReceived + ", dateDue="
+				+ dateDue + ", designationCode=" + designationCode + ", sectionCode=" + sectionCode + ", expenseCode="
+				+ expenseCode + ", particulars=" + particulars + ", amount=" + amount + ", Payee=" + Payee + "]";
 	}
+	
+	
 }

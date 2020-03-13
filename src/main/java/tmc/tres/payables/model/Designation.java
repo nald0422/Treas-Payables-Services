@@ -1,32 +1,37 @@
 package tmc.tres.payables.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
 public class Designation {
 	
 	@Id
+	@GeneratedValue
+	@Column(name = "designationId", updatable = false, nullable = false)
 	private int designationId;
+	@Column(name="designation_code")
 	private String designationCode;
+	@Column(name="designation_desc")
+	private String designationCategory;
 	
-	public int getDesignationId() {
-		return designationId;
-	}
-	
-	public void setDesignationId(int designationId) {
-		this.designationId = designationId;
-	}
-	
+	@OneToMany(mappedBy="designationCode")
+	private List<PaymentRequest> paymentRequest;
+
 	public String getDesignationCode() {
 		return designationCode;
 	}
-	
+
 	public void setDesignationCode(String designationCode) {
 		this.designationCode = designationCode;
 	}
-	
-	@Override
-	public String toString() {
-		return "ho_branch [designationId=" + designationId + ", designationCode=" + designationCode + "]";
+
+	public String getDesignationCategory() {
+		return designationCategory;
+	}
+
+	public void setDesignationCategory(String designationCategory) {
+		this.designationCategory = designationCategory;
 	}
 }
