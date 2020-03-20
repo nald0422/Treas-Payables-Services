@@ -23,7 +23,7 @@ public class PaymentRequestController {
 	@ResponseBody
 	public void addPaymentRequest(@RequestBody List<PaymentRequest> paymentRequest) {
 		for(PaymentRequest pr: paymentRequest) {
-//			payment_repo.save(pr);
+			payment_repo.save(pr);
 			System.out.println("Particular : " + pr.getParticulars());
 		}
 		

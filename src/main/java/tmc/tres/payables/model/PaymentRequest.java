@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 public class PaymentRequest {
@@ -18,9 +19,11 @@ public class PaymentRequest {
 	@GeneratedValue
 	@Column(name = "paymentRequestNo", updatable = false, nullable = false)
 	private int paymentRequestNo;      
+	
 	@JsonFormat
     (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date dateReceived;
+	
 	@JsonFormat
     (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date dateDue;
