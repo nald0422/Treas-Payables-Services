@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
@@ -30,11 +31,14 @@ public class PaymentRequest {
 	
 	@ManyToOne
 	@JoinColumn(name = "designationCode")
+	@JsonProperty("designation")
 	private	Designation designationCode;
 	@ManyToOne
+	@JsonProperty("section")
 	@JoinColumn(name = "sectionCode")
 	private Section sectionCode;
 	@ManyToOne
+	@JsonProperty("expense")
 	@JoinColumn(name = "expenseCode")
 	private Expense expenseCode;
 	
