@@ -25,6 +25,14 @@ public class Section {
 	@OneToMany(mappedBy="sectionCode")
 	private List<PaymentRequest> paymentRequest;
 	
+	public int getSectionId() {
+		return sectionId;
+	}
+
+	public void setSectionId(int sectionId) {
+		this.sectionId = sectionId;
+	}
+
 	public String getSectionCode() {
 		return sectionCode;
 	}

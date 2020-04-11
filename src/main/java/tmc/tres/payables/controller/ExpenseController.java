@@ -5,11 +5,15 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tmc.tres.payables.dao.Expense_Repo;
+import tmc.tres.payables.model.Designation;
 import tmc.tres.payables.model.Expense;
 
 @RestController
@@ -18,18 +22,22 @@ public class ExpenseController {
 	@Autowired
 	Expense_Repo expense_repo;
 	
-	@RequestMapping("/addExpense")
+	@PostMapping(path="/addExpense")
 	@ResponseBody
-	public void addExpense(Expense expense) {
+	public void addExpense(@RequestBody Expense expense) {
+		System.out.println(expense.toString());
 		expense_repo.save(expense);
-		System.out.println("Expense Saved");
 	}
 	
-	@RequestMapping("/updateExpense")
+	@PutMapping(path="/updateExpense")
 	@ResponseBody
-	public void updateExpense(Expense expense) {
-		expense_repo.save(expense);
-		System.out.println("Expense Updated");
+	public void updateDesignation(@RequestBody Expense expense) {
+		expense_repo.setExpenseInfoById(expense.getExpenseCode(), expense.getExpenseDesc(), expense.getExpenseId());
+	}
+	
+	@RequestMapping("/removeExpense/{expenseId}")
+	public void deleteDesignation(@PathVariable("expenseId") int expenseId) {
+		expense_repo.deleteById(expenseId);
 	}
 	
 	@RequestMapping(path="/expenses", produces= {"application/json"})

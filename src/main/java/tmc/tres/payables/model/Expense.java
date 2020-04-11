@@ -21,6 +21,14 @@ public class Expense {
 	@OneToMany(mappedBy="expenseCode")
 	private List<PaymentRequest> paymentRequest;
 	
+	public int getExpenseId() {
+		return expenseId;
+	}
+
+	public void setExpenseId(int expenseId) {
+		this.expenseId = expenseId;
+	}
+
 	public String getExpenseCode() {
 		return expenseCode;
 	}
