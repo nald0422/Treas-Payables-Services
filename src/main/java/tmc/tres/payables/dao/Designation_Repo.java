@@ -13,11 +13,11 @@ import tmc.tres.payables.model.Designation;
 
 public interface Designation_Repo extends JpaRepository<Designation, Integer>{
 
-	List<Designation> findBydesignationCode(String designation);
+//	List<Designation> findBydesignation_code(String designation);
 	
-	@Modifying
-	@Transactional
-	@Query(value = "update Designation d set d.designationCode = :designationCode, d.designationDesc = :designationDesc where d.designationId = :designationId")
-	void setDesignationInfoById(String designationCode, String designationDesc, Integer designationId);
+//	@Modifying
+//	@Transactional
+//	@Query(value = "update Designation d set d.designationCode = :designationCode, d.designationDesc = :designationDesc where d.designationId = :designationId")
+//	void setDesignationInfoById(String designationCode, String designationDesc, Long designationId);
 	
 }

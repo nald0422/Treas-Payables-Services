@@ -1,55 +1,49 @@
 package tmc.tres.payables.model;
 
-import java.util.List;
-
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+/**
+ * @author Leshi
+ */
 
 @Entity
 public class Expense {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name = "expenseId", updatable = false, nullable = false)
-	private int expenseId;
-	private String expenseCode;
-	private String expenseDesc;
-	
-	@OneToMany(mappedBy="expenseCode")
-	private List<PaymentRequest> paymentRequest;
-	
-	public int getExpenseId() {
-		return expenseId;
+	private Long expense_id;
+
+	@Basic
+	private String expense_code;
+
+	@Basic
+	private String expense_description;
+
+	public Long getExpense_id() {
+		return expense_id;
 	}
 
-	public void setExpenseId(int expenseId) {
-		this.expenseId = expenseId;
+	public void setExpense_id(Long expense_id) {
+		this.expense_id = expense_id;
 	}
 
-	public String getExpenseCode() {
-		return expenseCode;
+	public String getExpense_code() {
+		return expense_code;
 	}
-	
-	public void setExpenseCode(String expenseCode) {
-		this.expenseCode = expenseCode;
+
+	public void setExpense_code(String expense_code) {
+		this.expense_code = expense_code;
 	}
-	
-	public String getExpenseDesc() {
-		return expenseDesc;
+
+	public String getExpense_description() {
+		return expense_description;
 	}
-	
-	public void setExpenseDesc(String expenseDesc) {
-		this.expenseDesc = expenseDesc;
+
+	public void setExpense_description(String expense_description) {
+		this.expense_description = expense_description;
 	}
-	
-	@Override
-	public String toString() {
-		return "Expense [expenseCode=" + expenseCode + ", expenseDesc=" + expenseDesc + "]";
-	}
-	
-	
-	
+
 }

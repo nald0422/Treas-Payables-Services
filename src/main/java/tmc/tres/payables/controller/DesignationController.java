@@ -33,7 +33,7 @@ public class DesignationController {
 	@PutMapping(path="/updateDesignation")
 	@ResponseBody
 	public void updateDesignation(@RequestBody Designation designation) {
-		designation_repo.setDesignationInfoById(designation.getDesignationCode(), designation.getDesignationDesc(), designation.getDesignationId());
+//		designation_repo.setDesignationInfoById(designation.getDesignation_code(), designation.getDesignation_description(), designation.getDesignation_id());
 		System.out.println("Designation Updated : " + designation.toString());
 	}
 	

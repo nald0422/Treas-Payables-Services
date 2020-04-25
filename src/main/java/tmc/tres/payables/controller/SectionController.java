@@ -26,13 +26,19 @@ public class SectionController {
 	@PostMapping(path="/addSection")
 	@ResponseBody
 	public void addSection(@RequestBody Section section) {
+		System.out.println(section.toString());
 		section_repo.save(section);
 	}
 	
 	@PutMapping(path="/updateSection")
 	@ResponseBody
-	public void updateSection(@RequestBody Section section) {
-		section_repo.save(section);
+	public void updateDesignation(@RequestBody Section section) {
+//		section_repo.setSectionInfoById(section.getSection_code(), section.getSection_description(), section.getSection_id());
+	}
+	
+	@RequestMapping("/removeSection/{sectionId}")
+	public void deleteDesignation(@PathVariable("sectionId") int sectionId) {
+		section_repo.deleteById(sectionId);
 	}
 	
 	@GetMapping(path="/sections", produces= {"application/json"})

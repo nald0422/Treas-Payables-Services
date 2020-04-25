@@ -1,52 +1,49 @@
 package tmc.tres.payables.model;
 
-import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+/**
+ * @author Leshi
+ */
 
 @Entity
 public class Designation {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name = "designationId", updatable = false, nullable = false)
-	private int designationId;
-	private String designationCode;
-	private String designationDesc;
-	
-	@OneToMany(mappedBy="designationCode")
-	private List<PaymentRequest> paymentRequest;
+	private Long designation_id;
 
-	public int getDesignationId() {
-		return designationId;
+	@Basic
+	private String designation_code;
+
+	@Basic
+	private String designation_description;
+
+	public Long getDesignation_id() {
+		return designation_id;
 	}
 
-	public void setDesignationId(int designationId) {
-		this.designationId = designationId;
+	public void setDesignation_id(Long designation_id) {
+		this.designation_id = designation_id;
 	}
 
-	public String getDesignationCode() {
-		return designationCode;
+	public String getDesignation_code() {
+		return designation_code;
 	}
 
-	public void setDesignationCode(String designationCode) {
-		this.designationCode = designationCode;
+	public void setDesignation_code(String designation_code) {
+		this.designation_code = designation_code;
 	}
 
-	public String getDesignationDesc() {
-		return designationDesc;
+	public String getDesignation_description() {
+		return designation_description;
 	}
 
-	public void setDesignationDesc(String designationDesc) {
-		this.designationDesc = designationDesc;
+	public void setDesignation_description(String designation_description) {
+		this.designation_description = designation_description;
 	}
 
-	@Override
-	public String toString() {
-		return "Designation [designationId=" + designationId + ", designationCode=" + designationCode
-				+ ", designationDesc=" + designationDesc + ", paymentRequest=" + paymentRequest + "]";
-	}
-	
 }

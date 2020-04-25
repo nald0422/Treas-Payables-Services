@@ -1,52 +1,48 @@
 package tmc.tres.payables.model;
 
-import java.util.List;
-
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
+/**
+ * @author Leshi
+ */
 @Entity
 public class Section {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name = "sectionId", updatable = false, nullable = false)
-	private int sectionId;
-	@Column(name="section_code")
-	private String sectionCode;
-	@Column(name="section_desc")
-	private String sectionDesc;
+	private Long section_id;
 
-	
-	@OneToMany(mappedBy="sectionCode")
-	private List<PaymentRequest> paymentRequest;
-	
-	public int getSectionId() {
-		return sectionId;
+	@Basic
+	private String section_code;
+
+	@Basic
+	private String section_description;
+
+	public Long getSection_id() {
+		return section_id;
 	}
 
-	public void setSectionId(int sectionId) {
-		this.sectionId = sectionId;
+	public void setSection_id(Long section_id) {
+		this.section_id = section_id;
 	}
 
-	public String getSectionCode() {
-		return sectionCode;
+	public String getSection_code() {
+		return section_code;
 	}
 
-	public void setSectionCode(String sectionCode) {
-		this.sectionCode = sectionCode;
+	public void setSection_code(String section_code) {
+		this.section_code = section_code;
 	}
 
-	public String getSectionDesc() {
-		return sectionDesc;
+	public String getSection_description() {
+		return section_description;
 	}
 
-	public void setSectionDesc(String sectionDesc) {
-		this.sectionDesc = sectionDesc;
+	public void setSection_description(String section_description) {
+		this.section_description = section_description;
 	}
-	
+
 }

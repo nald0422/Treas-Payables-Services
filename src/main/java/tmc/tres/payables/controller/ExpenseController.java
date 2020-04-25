@@ -32,7 +32,7 @@ public class ExpenseController {
 	@PutMapping(path="/updateExpense")
 	@ResponseBody
 	public void updateDesignation(@RequestBody Expense expense) {
-		expense_repo.setExpenseInfoById(expense.getExpenseCode(), expense.getExpenseDesc(), expense.getExpenseId());
+//		expense_repo.setExpenseInfoById(expense.getExpense_code(), expense.getExpense_description(), expense.getExpense_id());
 	}
 	
 	@RequestMapping("/removeExpense/{expenseId}")
@@ -46,9 +46,9 @@ public class ExpenseController {
 		return expense_repo.findAll();
 	}
 	
-	@RequestMapping("/getExpense/{expenseCode}") 
-	@ResponseBody
-	public List<Expense> getExpense(@PathVariable("expenseCode") String expenseCode) {
-		return expense_repo.findByexpenseCode(expenseCode);
-	}
+//	@RequestMapping("/getExpense/{expenseCode}") 
+//	@ResponseBody
+//	public List<Expense> getExpense(@PathVariable("expenseCode") String expenseCode) {
+//		return expense_repo.findByexpense_code(expenseCode);
+//	}
 }
