@@ -4,12 +4,14 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Leshi
  */
 
 @Entity
+@Table(name = "Payables.Expense.Tbl")
 public class Expense {
 
 	@Id
