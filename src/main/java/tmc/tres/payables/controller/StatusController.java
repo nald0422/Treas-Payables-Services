@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import tmc.tres.payables.model.Disbursement;
 import tmc.tres.payables.model.Status;
 
 @RestController
-public class StatuController {
+public class StatusController {
 
 	@Autowired
 	Status_Repo status_repo;
@@ -28,6 +29,7 @@ public class StatuController {
 	
 	@PutMapping(path = "/updateStatus")
 	@ResponseBody
+	
 	public void updateStatus(@RequestBody Status status) {
 		status_repo.save(status);
 	}
@@ -36,6 +38,12 @@ public class StatuController {
 	@ResponseBody
 	public List<Status> getStatus() {
 		return status_repo.findAll();
+	}
+	
+	@GetMapping(path = "/getStatus/{id}")
+	@ResponseBody
+	public Status getStatus(@PathVariable("id") int statusId) {
+		return status_repo.findBystatusId(statusId);
 	}
 	
 }

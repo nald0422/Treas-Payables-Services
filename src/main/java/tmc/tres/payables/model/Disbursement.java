@@ -3,14 +3,17 @@ package tmc.tres.payables.model;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Payables.Disbursement.Tbl")
@@ -19,13 +22,14 @@ public class Disbursement {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, updatable = false)
-	private Long disbursementId;
+	private long disbursementId;
 
 	@Basic
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date datePrepared;
 
 	@OneToOne
+	@JoinColumn(name = "bankId")
 	private Bank bank;
 
 	@Basic
@@ -39,16 +43,15 @@ public class Disbursement {
 	private Date checkDate;
 
 	@OneToOne
-	private PaymentRequest payment_request;
+	@JoinColumn(name = "payablesId")
+	@JsonIgnore
+	private Payables payables;
 
-	@OneToOne
-	private Status status;
-
-	public Long getDisbursementId() {
+	public long getDisbursementId() {
 		return disbursementId;
 	}
 
-	public void setDisbursementId(Long disbursementId) {
+	public void setDisbursementId(long disbursementId) {
 		this.disbursementId = disbursementId;
 	}
 
@@ -92,27 +95,19 @@ public class Disbursement {
 		this.checkDate = checkDate;
 	}
 
-	public PaymentRequest getPayment_request() {
-		return payment_request;
+	public Payables getPayables() {
+		return payables;
 	}
 
-	public void setPayment_request(PaymentRequest payment_request) {
-		this.payment_request = payment_request;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setPayables(Payables payables) {
+		this.payables = payables;
 	}
 
 	@Override
 	public String toString() {
 		return "Disbursement [disbursementId=" + disbursementId + ", datePrepared=" + datePrepared + ", bank=" + bank
-				+ ", checkNumber=" + checkNumber + ", cvNumber=" + cvNumber + ", checkDate=" + checkDate
-				+ ", payment_request=" + payment_request + ", status=" + status + "]";
+				+ ", checkNumber=" + checkNumber + ", cvNumber=" + cvNumber + ", checkDate=" + checkDate + ", payables="
+				+ payables + "]";
 	}
 
 }

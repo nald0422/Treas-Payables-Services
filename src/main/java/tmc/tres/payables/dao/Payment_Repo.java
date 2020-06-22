@@ -10,12 +10,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import tmc.tres.payables.model.PaymentRequest;
+import tmc.tres.payables.model.Status;
 
 public interface Payment_Repo extends JpaRepository<PaymentRequest, Integer>{
 	PaymentRequest findBypaymentRequestNo(long id);
 	
-	@Modifying
-	@Transactional
-	@Query("update PaymentRequest par set par.status = :status where par.paymentRequestNo = :paymentRequestNo")
-	int setStatusForPaymentRequest(@Param("status") String status, @Param("paymentRequestNo") Long paymentRequestNo);
+//	@Modifying
+//	@Transactional
+//	@Query("update PaymentRequest par set par.status = :status where par.paymentRequestNo = :paymentRequestNo")
+//	int setStatusForPaymentRequest(@Param("status") Status status, @Param("paymentRequestNo") Long paymentRequestNo);
 }

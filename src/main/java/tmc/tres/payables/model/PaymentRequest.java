@@ -3,6 +3,7 @@ package tmc.tres.payables.model;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import tmc.tres.payables.model.primary_keys.PaymentRequestPK;
-
 /**
  * @author Leshi
  */
@@ -29,13 +28,13 @@ public class PaymentRequest {
 	@Id
 	@GeneratedValue
 	@Column(name = "paymentRequestNo", nullable = false, updatable = false)
-	private Long paymentRequestNo;
+	private long paymentRequestNo;
 
 	@Basic
 	private String payee;
 
 	@Basic
-	private Long amount;
+	private long amount;
 
 	@Basic
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -49,22 +48,27 @@ public class PaymentRequest {
 	private String particulars;
 
 	@OneToOne
-	private Status status;
-
-	@OneToOne
+	@JoinColumn(name = "designationId")
 	private Designation designation;
 
 	@OneToOne
+	@JoinColumn(name = "sectionId")
 	private Section section;
 
 	@OneToOne
+	@JoinColumn(name = "expenseId")
 	private Expense expense;
 
-	public Long getPaymentRequestNo() {
+	@OneToOne
+	@JoinColumn(name = "payablesId")
+	@JsonIgnore
+	private Payables payables;
+
+	public long getPaymentRequestNo() {
 		return paymentRequestNo;
 	}
 
-	public void setPaymentRequestNo(Long paymentRequestNo) {
+	public void setPaymentRequestNo(long paymentRequestNo) {
 		this.paymentRequestNo = paymentRequestNo;
 	}
 
@@ -76,11 +80,11 @@ public class PaymentRequest {
 		this.payee = payee;
 	}
 
-	public Long getAmount() {
+	public long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(long amount) {
 		this.amount = amount;
 	}
 
@@ -108,14 +112,6 @@ public class PaymentRequest {
 		this.particulars = particulars;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
 	public Designation getDesignation() {
 		return designation;
 	}
@@ -140,12 +136,20 @@ public class PaymentRequest {
 		this.expense = expense;
 	}
 
+	public Payables getPayables() {
+		return payables;
+	}
+
+	public void setPayables(Payables payables) {
+		this.payables = payables;
+	}
+
 	@Override
 	public String toString() {
 		return "PaymentRequest [paymentRequestNo=" + paymentRequestNo + ", payee=" + payee + ", amount=" + amount
 				+ ", dateReceived=" + dateReceived + ", dateDue=" + dateDue + ", particulars=" + particulars
-				+ ", status=" + status + ", designation=" + designation + ", section=" + section + ", expense="
-				+ expense + "]";
+				+ ", designation=" + designation + ", section=" + section + ", expense=" + expense + ", payables="
+				+ payables + "]";
 	}
 
 }

@@ -15,7 +15,7 @@ public class Section {
 
 	@Id
 	@GeneratedValue
-	private Long section_id;
+	private long section_id;
 
 	@Basic
 	private String section_code;
@@ -23,11 +23,11 @@ public class Section {
 	@Basic
 	private String section_description;
 
-	public Long getSection_id() {
+	public long getSection_id() {
 		return section_id;
 	}
 
-	public void setSection_id(Long section_id) {
+	public void setSection_id(long section_id) {
 		this.section_id = section_id;
 	}
 
