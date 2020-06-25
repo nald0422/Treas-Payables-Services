@@ -62,26 +62,27 @@ public class PaymentRequestController {
 
 	@PutMapping(path = "/updatePaymentRequest/{opt}")
 	@ResponseBody
-	public void updatePaymentRequest(@RequestBody PaymentRequest paymentRequest, @PathVariable("opt") String operation) {
+	public void updatePaymentRequest(@RequestBody PaymentRequest paymentRequest,
+			@PathVariable("opt") String operation) {
+
+		Payables payable = payables_repo.findByPaymentRequest(paymentRequest);
 
 		// Switch Cased has been used if ever new action will be added in the future.
 		switch (operation) {
 		case "void":
-			Payables payable = payables_repo.findByPaymentRequest(paymentRequest);
 
 			Status status = new Status();
 
 			status.setStatusId(10);
 			payable.setStatus(status);
 			payables_repo.save(payable);
-			
-			paymentRequest.setPayables(payable);
-			
+
 			break;
 		default:
 			System.out.println("Regular update with payment request id : " + paymentRequest.getPaymentRequestNo());
 		}
-		
+
+		paymentRequest.setPayables(payable);
 		payment_repo.save(paymentRequest);
 	}
 

@@ -87,9 +87,27 @@ public class DisbursementController {
 		}
 	}
 
-	@PutMapping(path = "/updateDisbursement")
+	@PutMapping(path = "/updateDisbursement/{opt}")
 	@ResponseBody
-	public void updateDisbursement(@RequestBody Disbursement disbursement) {
+	public void updateDisbursement(@RequestBody Disbursement disbursement, @PathVariable("opt") String operation) {
+
+		Payables payable = payables_repo.findByDisbursement(disbursement);
+
+		switch (operation) {
+		case "void":
+
+			Status status = new Status();
+
+			status.setStatusId(10);
+			payable.setStatus(status);
+			payables_repo.save(payable);
+
+			break;
+		default:
+			System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
+		}
+
+		disbursement.setPayables(payable);
 		disbursement_repo.save(disbursement);
 	}
 

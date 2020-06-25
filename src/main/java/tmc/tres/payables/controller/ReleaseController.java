@@ -152,7 +152,7 @@ public class ReleaseController {
 				payables_repo.save(payable);
 
 				release.setPayables(payable);
-
+				release_repo.save(release);
 			} else {
 				System.out.println("Failed Updating Payable, Please Review Updated Data of Release.");
 			}

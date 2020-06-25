@@ -24,6 +24,7 @@ public class Release {
 	private long releaseId;
 
 	@Basic
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date dateFunded;
 
 	@Basic
