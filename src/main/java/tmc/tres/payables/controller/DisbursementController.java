@@ -34,10 +34,10 @@ public class DisbursementController {
 	@Autowired
 	Payables_Repo payables_repo;
 
-	@PostMapping(path = "/addDisbursement/{paymentRequestNo}")
+	@PostMapping(path = "/addDisbursement/{paymentRequestNo}/{operation}")
 	@ResponseBody
 	public void addDisbursement(@RequestBody Disbursement disbursement,
-			@PathVariable("paymentRequestNo") long paymentRequestNo) {
+			@PathVariable("paymentRequestNo") long paymentRequestNo, @PathVariable("operation") String operation) {
 
 		// Get PaymentRequest Entity based from client's payment request no.
 		PaymentRequest paymentRequest = new PaymentRequest();
@@ -57,8 +57,44 @@ public class DisbursementController {
 				payable.setDisbursement(disbursement);
 
 				Status status = new Status();
-				status.setStatusId(3);
-				payable.setStatus(status);
+				switch (operation) {
+
+				case "disburse":
+
+					if (payable.getStatus().getStatusId() == 3) {
+						System.out.println(
+								"Existing disburse record with disbursement id : " + disbursement.getDisbursementId());
+					} else {
+						status.setStatusId(3);
+						payable.setStatus(status);
+					}
+
+					break;
+				case "chequePrepared":
+
+					if (payable.getStatus().getStatusId() == 2) {
+						System.out.println(
+								"Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
+					} else {
+						status.setStatusId(2);
+						payable.setStatus(status);
+					}
+					break;
+				case "void":
+
+					if (payable.getStatus().getStatusId() == 10) {
+						System.out.println(
+								"Existing void record with disbursement id : " + disbursement.getDisbursementId());
+					} else {
+						status.setStatusId(10);
+						payable.setStatus(status);
+					}
+
+					break;
+				default:
+					System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
+				}
+				payables_repo.save(payable);
 
 				Boolean opPayable = true;
 
@@ -93,19 +129,46 @@ public class DisbursementController {
 
 		Payables payable = payables_repo.findByDisbursement(disbursement);
 
+		Status status = new Status();
+
 		switch (operation) {
+
+		case "disburse":
+
+			if (payable.getStatus().getStatusId() == 3) {
+				System.out
+						.println("Existing disburse record with disbursement id : " + disbursement.getDisbursementId());
+			} else {
+				status.setStatusId(3);
+				payable.setStatus(status);
+			}
+
+			break;
+		case "chequePrepared":
+
+			if (payable.getStatus().getStatusId() == 2) {
+				System.out.println("Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
+			} else {
+				status.setStatusId(2);
+				payable.setStatus(status);
+			}
+			break;
 		case "void":
 
-			Status status = new Status();
+			if (payable.getStatus().getStatusId() == 10) {
+				System.out.println("Existing void record with disbursement id : " + disbursement.getDisbursementId());
+			} else {
+				status.setStatusId(10);
+				payable.setStatus(status);
 
-			status.setStatusId(10);
-			payable.setStatus(status);
-			payables_repo.save(payable);
+			}
 
 			break;
 		default:
 			System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
 		}
+
+		payables_repo.save(payable);
 
 		disbursement.setPayables(payable);
 		disbursement_repo.save(disbursement);

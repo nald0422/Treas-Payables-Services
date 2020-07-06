@@ -71,22 +71,53 @@ public class ReleaseController {
 
 					switch (opt) {
 					case "onhold":
-						status.setStatusId(8);
+						if (checkDuplicateStatus(payable.getStatus().getStatusId(), 8) == true) {
+							System.out.println("Existing onhold record with disbursement id : "
+									+ disbursement.getDisbursementId());
+						} else {
+							status.setStatusId(8);
+						}
+
 						break;
 					case "cancel":
-						status.setStatusId(6);
-						release.setDateCancelled(Calendar.getInstance().getTime());
+						if (checkDuplicateStatus(payable.getStatus().getStatusId(), 6) == true) {
+							System.out.println("Existing cancel record with disbursement id : "
+									+ disbursement.getDisbursementId());
+						} else {
+							status.setStatusId(6);
+							release.setDateCancelled(Calendar.getInstance().getTime());
+						}
+
 						break;
 					case "fund":
-						status.setStatusId(9);
-						release.setDateFunded(Calendar.getInstance().getTime());
+						if (checkDuplicateStatus(payable.getStatus().getStatusId(), 9) == true) {
+							System.out.println(
+									"Existing fund record with disbursement id : " + disbursement.getDisbursementId());
+						} else {
+							status.setStatusId(9);
+							release.setDateFunded(Calendar.getInstance().getTime());
+						}
+
 						break;
 					case "release":
-						status.setStatusId(5);
-						release.setDateReleased(Calendar.getInstance().getTime());
+
+						if (checkDuplicateStatus(payable.getStatus().getStatusId(), 5) == true) {
+							System.out.println("Existing release record with disbursement id : "
+									+ disbursement.getDisbursementId());
+						} else {
+							status.setStatusId(5);
+							release.setDateReleased(Calendar.getInstance().getTime());
+						}
+
 						break;
 					case "pendingforfund":
-						status.setStatusId(4);
+						if (checkDuplicateStatus(payable.getStatus().getStatusId(), 4) == true) {
+							System.out.println("Existing pending fund record with disbursement id : "
+									+ disbursement.getDisbursementId());
+						} else {
+							status.setStatusId(4);
+						}
+
 						break;
 					}
 
@@ -103,6 +134,14 @@ public class ReleaseController {
 			} else {
 				System.out.println("Disbursed Payment has already released record.");
 			}
+		}
+	}
+
+	private boolean checkDuplicateStatus(int payableStatusId, int releaseId) {
+		if (payableStatusId == releaseId) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -129,22 +168,49 @@ public class ReleaseController {
 				Status status = new Status();
 				switch (opt) {
 				case "onhold":
-					status.setStatusId(8);
+					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 8) == true) {
+						System.out.println("Existing onhold record with release id : " + release.getReleaseId());
+					} else {
+						status.setStatusId(8);
+					}
+
 					break;
 				case "cancel":
-					status.setStatusId(6);
-					release.setDateCancelled(Calendar.getInstance().getTime());
+					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 6) == true) {
+						System.out.println("Existing cancel record with release id : " + release.getReleaseId());
+					} else {
+						status.setStatusId(6);
+						release.setDateCancelled(Calendar.getInstance().getTime());
+					}
+
 					break;
 				case "fund":
-					status.setStatusId(9);
-					release.setDateFunded(Calendar.getInstance().getTime());
+					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 9) == true) {
+						System.out.println("Existing fund record with release id : " + release.getReleaseId());
+					} else {
+						status.setStatusId(9);
+						release.setDateFunded(Calendar.getInstance().getTime());
+					}
+
 					break;
 				case "release":
-					status.setStatusId(5);
-					release.setDateReleased(Calendar.getInstance().getTime());
+
+					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 5) == true) {
+						System.out.println("Existing release record with release id : " + release.getReleaseId());
+					} else {
+						status.setStatusId(5);
+						release.setDateReleased(Calendar.getInstance().getTime());
+					}
+
 					break;
-				case "pendingfund":
-					status.setStatusId(4);
+				case "pendingforfund":
+					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 4) == true) {
+						System.out.println(
+								"Existing pending fund record with release id : " + release.getReleaseId());
+					} else {
+						status.setStatusId(4);
+					}
+
 					break;
 				}
 
@@ -160,7 +226,6 @@ public class ReleaseController {
 		} else {
 			System.out.println("Release with id : " + release.getReleaseId() + "doesn't exist.");
 		}
-
 	}
 
 	@RequestMapping("/releases")

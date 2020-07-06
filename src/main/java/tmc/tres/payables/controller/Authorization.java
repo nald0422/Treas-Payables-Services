@@ -3,12 +3,17 @@ package tmc.tres.payables.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +39,8 @@ public class Authorization {
 	private MyUserDetailsService userDetailsService;
 	
 
+	@Consumes("application/json")
+	@Produces("application/json")
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public AuthorizationModel createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
@@ -69,6 +76,12 @@ public class Authorization {
 	@RequestMapping(value = "/updateAccount", method = RequestMethod.PUT)
 	public void updateUser(@RequestBody User user) throws Exception {
 		userDetailsService.update(user);
+	}
+	
+	@RequestMapping(value = "/verifyDuplicate", method = RequestMethod.POST)
+	public boolean verifyUserName(@RequestBody User user) {
+		System.out.println("TEST");
+		return userDetailsService.verifyDuplicateUserName(user.getUserName());
 	}
 
 }

@@ -1,6 +1,7 @@
 package tmc.tres.payables.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import tmc.tres.payables.model.MyUserDetails;
 import tmc.tres.payables.model.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,26 +57,42 @@ public class MyUserDetailsService implements UserDetailsService {
 		newUser.setRoles(user.getRoles());
 		return userRepository.save(newUser);
 	}
-	
+
+	public boolean verifyDuplicateUserName(String userName) {
+
+		List<User> users = userRepository.findAll();
+
+		boolean isExist = false;
+
+		Optional<User> userObj = userRepository.findByUserName(userName);
+		isExist = userObj.isPresent();
+
+		if (isExist == true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void update(User user) {
-		
+
 		Optional<User> userObj = userRepository.findByUserName(user.getUserName());
 
 		userObj.orElseThrow(() -> new UsernameNotFoundException("Not found: " + user.getUserName()));
-		
+
 		User user_temp = userRepository.findById(userObj.get().getId());
-		
+
 		user_temp.setUserName(user.getUserName());
 		user_temp.setActive(user.isActive());
-		
-		if(user.getRoles().equalsIgnoreCase(" ")) {
+
+		if (user.getRoles().equalsIgnoreCase("")) {
 			user_temp.setRoles("default");
 		} else {
 			user_temp.setRoles(user.getRoles());
 		}
-		
+
 		user_temp.setPassword(user.getPassword());
-		
+
 		userRepository.save(user_temp);
 	}
 }
