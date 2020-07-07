@@ -205,7 +205,7 @@ public class ReleaseController {
 				case "update":
 					System.out.println("Release with id : " + release.getReleaseId()
 							+ "has been successfully updated at : " + Calendar.getInstance().getTime());
-					release.setPayables(payable);
+					status.setStatusId(payable.getStatus().getStatusId());
 					break;
 				}
 

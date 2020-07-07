@@ -66,7 +66,6 @@ public class DisbursementController {
 								"Existing disburse record with disbursement id : " + disbursement.getDisbursementId());
 					} else {
 						status.setStatusId(3);
-						payable.setStatus(status);
 					}
 
 					break;
@@ -77,23 +76,11 @@ public class DisbursementController {
 								"Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
 					} else {
 						status.setStatusId(2);
-						payable.setStatus(status);
 					}
 					break;
-				case "void":
-
-					if (payable.getStatus().getStatusId() == 10) {
-						System.out.println(
-								"Existing void record with disbursement id : " + disbursement.getDisbursementId());
-					} else {
-						status.setStatusId(10);
-						payable.setStatus(status);
-					}
-
-					break;
-				default:
-					System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
 				}
+
+				payable.setStatus(status);
 				payables_repo.save(payable);
 
 				Boolean opPayable = true;
@@ -130,16 +117,19 @@ public class DisbursementController {
 		Payables payable = payables_repo.findByDisbursement(disbursement);
 
 		Status status = new Status();
-
+		
+		System.out.println("Operation : " + operation);
+		
 		switch (operation) {
 
 		case "disburse":
-
 			if (payable.getStatus().getStatusId() == 3) {
 				System.out
 						.println("Existing disburse record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(3);
+				payable.setStatus(status);
+				System.out.println("disburse");
 			}
 
 			break;
@@ -149,26 +139,46 @@ public class DisbursementController {
 				System.out.println("Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(2);
+				payable.setStatus(status);
+				System.out.println("chequePrepared");
 			}
 			break;
 		case "void":
 
 			if (payable.getStatus().getStatusId() == 10) {
-				System.out.println("Existing void record with disbursement id : " + disbursement.getDisbursementId());
+				System.out.println("Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(10);
+				payable.setStatus(status);
+				System.out.println("void");
 			}
-
 			break;
-		default:
-			System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
+		case "update":
+			status.setStatusId(payable.getStatus().getStatusId());
+			payable.setStatus(status);
+			break;
 		}
 
-		payable.setStatus(status);
 		payables_repo.save(payable);
 
-		disbursement.setPayables(payable);
-		disbursement_repo.save(disbursement);
+		Boolean opPayable = true;
+
+		try {
+			payables_repo.save(payable);
+		} catch (Exception e) {
+			System.out.println("Error updating disbursement:" + disbursement.getDisbursementId() + " with error: "
+					+ e.getMessage());
+			opPayable = false;
+		}
+
+		if (opPayable == true) {
+			// Set Disbursement's assigned Payable
+			disbursement.setPayables(payable);
+			disbursement_repo.save(disbursement);
+		} else {
+			System.out.println("Failed Updating Payable, Please Review Updated Data of Disbursement.");
+		}
+
 	}
 
 	@GetMapping(path = "/disbursements")
