@@ -122,7 +122,6 @@ public class ReleaseController {
 					}
 
 					payable.setStatus(status);
-					System.out.println("Status : " + payable.getStatus().getStatusDescription());
 					payables_repo.save(payable);
 
 					// Set Release's Assigned Payable
@@ -203,14 +202,10 @@ public class ReleaseController {
 					}
 
 					break;
-				case "pendingforfund":
-					if (checkDuplicateStatus(payable.getStatus().getStatusId(), 4) == true) {
-						System.out.println(
-								"Existing pending fund record with release id : " + release.getReleaseId());
-					} else {
-						status.setStatusId(4);
-					}
-
+				case "update":
+					System.out.println("Release with id : " + release.getReleaseId()
+							+ "has been successfully updated at : " + Calendar.getInstance().getTime());
+					release.setPayables(payable);
 					break;
 				}
 

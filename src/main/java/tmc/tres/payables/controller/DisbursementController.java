@@ -140,7 +140,6 @@ public class DisbursementController {
 						.println("Existing disburse record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(3);
-				payable.setStatus(status);
 			}
 
 			break;
@@ -150,7 +149,6 @@ public class DisbursementController {
 				System.out.println("Existing cheque record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(2);
-				payable.setStatus(status);
 			}
 			break;
 		case "void":
@@ -159,8 +157,6 @@ public class DisbursementController {
 				System.out.println("Existing void record with disbursement id : " + disbursement.getDisbursementId());
 			} else {
 				status.setStatusId(10);
-				payable.setStatus(status);
-
 			}
 
 			break;
@@ -168,6 +164,7 @@ public class DisbursementController {
 			System.out.println("Regular update with disbursement id : " + disbursement.getDisbursementId());
 		}
 
+		payable.setStatus(status);
 		payables_repo.save(payable);
 
 		disbursement.setPayables(payable);

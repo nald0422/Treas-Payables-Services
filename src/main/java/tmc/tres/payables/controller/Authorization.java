@@ -80,7 +80,6 @@ public class Authorization {
 	
 	@RequestMapping(value = "/verifyDuplicate", method = RequestMethod.POST)
 	public boolean verifyUserName(@RequestBody User user) {
-		System.out.println("TEST");
 		return userDetailsService.verifyDuplicateUserName(user.getUserName());
 	}
 
