@@ -13,10 +13,4 @@ import tmc.tres.payables.model.Section;
 
 public interface Section_Repo extends JpaRepository<Section, Integer>{
 
-//	List<Section> findBysection_code(String section);
-	
-//	@Modifying
-//	@Transactional
-//	@Query(value = "update Section s set s.sectionCode = :sectionCode, s.sectionDesc = :sectionDesc where s.sectionId = :sectionId")
-//	void setSectionInfoById(String sectionCode, String sectionDesc, Long sectionId);
 }

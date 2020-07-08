@@ -3,6 +3,7 @@ package tmc.tres.payables.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,19 +24,24 @@ public class BankController {
 	@PostMapping(path = "/addBank")
 	@ResponseBody
 	public void addBank(@RequestBody Bank bank) {
-		System.out.println(bank.toString());
 		bank_repo.save(bank);
 	}
 
 	@PutMapping(path = "/updateBank")
 	@ResponseBody
 	public void updateBank(@RequestBody Bank bank) {
+		bank_repo.save(bank);
 	}
 
 	@RequestMapping(path = "/banks", produces = { "application/json" })
 	@ResponseBody
 	public List<Bank> getBanks() {
 		return bank_repo.findAll();
+	}
+	
+	@RequestMapping("/removeBank/{bankId}")
+	public void deleteDesignation(@PathVariable("bankId") int bankId) {
+		bank_repo.deleteById(bankId);
 	}
 
 }

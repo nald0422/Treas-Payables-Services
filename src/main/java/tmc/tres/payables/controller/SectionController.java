@@ -25,15 +25,14 @@ public class SectionController {
 	
 	@PostMapping(path="/addSection")
 	@ResponseBody
-	public void addSection(@RequestBody Section section) {
-		System.out.println(section.toString());
+	public void addSection(@RequestBody Section section) {		
 		section_repo.save(section);
 	}
 	
 	@PutMapping(path="/updateSection")
 	@ResponseBody
 	public void updateDesignation(@RequestBody Section section) {
-//		section_repo.setSectionInfoById(section.getSection_code(), section.getSection_description(), section.getSection_id());
+		section_repo.save(section);
 	}
 	
 	@RequestMapping("/removeSection/{sectionId}")
@@ -44,7 +43,6 @@ public class SectionController {
 	@GetMapping(path="/sections", produces= {"application/json"})
 	@ResponseBody
 	public List<Section> getSections() {
-		System.out.println("Test");
 		return section_repo.findAll();
 	}
 	

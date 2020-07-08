@@ -16,7 +16,7 @@ public class Expense {
 
 	@Id
 	@GeneratedValue
-	private long expense_id;
+	private int expense_id;
 
 	@Basic
 	private String expense_code;
@@ -24,11 +24,11 @@ public class Expense {
 	@Basic
 	private String expense_description;
 
-	public long getExpense_id() {
+	public int getExpense_id() {
 		return expense_id;
 	}
 
-	public void setExpense_id(long expense_id) {
+	public void setExpense_id(int expense_id) {
 		this.expense_id = expense_id;
 	}
 

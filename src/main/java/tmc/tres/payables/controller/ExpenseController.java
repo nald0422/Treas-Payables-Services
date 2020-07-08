@@ -25,14 +25,13 @@ public class ExpenseController {
 	@PostMapping(path="/addExpense")
 	@ResponseBody
 	public void addExpense(@RequestBody Expense expense) {
-		System.out.println(expense.toString());
 		expense_repo.save(expense);
 	}
 	
 	@PutMapping(path="/updateExpense")
 	@ResponseBody
 	public void updateDesignation(@RequestBody Expense expense) {
-//		expense_repo.setExpenseInfoById(expense.getExpense_code(), expense.getExpense_description(), expense.getExpense_id());
+		expense_repo.save(expense);
 	}
 	
 	@RequestMapping("/removeExpense/{expenseId}")

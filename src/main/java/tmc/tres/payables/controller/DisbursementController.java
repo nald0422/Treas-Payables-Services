@@ -117,9 +117,7 @@ public class DisbursementController {
 		Payables payable = payables_repo.findByDisbursement(disbursement);
 
 		Status status = new Status();
-		
-		System.out.println("Operation : " + operation);
-		
+
 		switch (operation) {
 
 		case "disburse":
@@ -129,7 +127,6 @@ public class DisbursementController {
 			} else {
 				status.setStatusId(3);
 				payable.setStatus(status);
-				System.out.println("disburse");
 			}
 
 			break;
@@ -140,7 +137,6 @@ public class DisbursementController {
 			} else {
 				status.setStatusId(2);
 				payable.setStatus(status);
-				System.out.println("chequePrepared");
 			}
 			break;
 		case "void":
@@ -150,7 +146,6 @@ public class DisbursementController {
 			} else {
 				status.setStatusId(10);
 				payable.setStatus(status);
-				System.out.println("void");
 			}
 			break;
 		case "update":

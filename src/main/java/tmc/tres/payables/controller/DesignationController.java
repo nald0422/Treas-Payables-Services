@@ -25,16 +25,13 @@ public class DesignationController {
 	@PostMapping(path="/addDesignation")
 	@ResponseBody
 	public void addDesignation(@RequestBody Designation designation) {
-		System.out.println(designation.toString());
 		designation_repo.save(designation);
-		System.out.println("Designated Saved");
 	}
 	
 	@PutMapping(path="/updateDesignation")
 	@ResponseBody
 	public void updateDesignation(@RequestBody Designation designation) {
-//		designation_repo.setDesignationInfoById(designation.getDesignation_code(), designation.getDesignation_description(), designation.getDesignation_id());
-		System.out.println("Designation Updated : " + designation.toString());
+		designation_repo.save(designation);
 	}
 	
 	@RequestMapping(path="/designations", produces= {"application/json"})

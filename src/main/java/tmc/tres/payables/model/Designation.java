@@ -16,7 +16,7 @@ public class Designation {
 
 	@Id
 	@GeneratedValue
-	private long designation_id;
+	private int designation_id;
 
 	@Basic
 	private String designation_code;
@@ -24,11 +24,11 @@ public class Designation {
 	@Basic
 	private String designation_description;
 
-	public long getDesignation_id() {
+	public int getDesignation_id() {
 		return designation_id;
 	}
 
-	public void setDesignation_id(long designation_id) {
+	public void setDesignation_id(int designation_id) {
 		this.designation_id = designation_id;
 	}
 
