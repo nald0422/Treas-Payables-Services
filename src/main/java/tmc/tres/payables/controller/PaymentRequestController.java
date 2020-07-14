@@ -1,5 +1,6 @@
 package tmc.tres.payables.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +97,18 @@ public class PaymentRequestController {
 	@ResponseBody
 	public List<PaymentRequest> getPaymentRequests() {
 		return payment_repo.findAll();
+	}
+	
+	@GetMapping(path = "/paymentRequests/entries")
+	@ResponseBody
+	public List<PaymentRequest> getPaymentRequestsByStatus() {
+		List<PaymentRequest> paymentRequests = new ArrayList<>();
+		List<Payables> payables = payables_repo.findByStatus_StatusId(1);
+		
+		for(Payables py: payables) {
+			paymentRequests.add(py.getPaymentRequest());
+		}
+		
+		return paymentRequests;
 	}
 }

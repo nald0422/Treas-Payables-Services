@@ -1,11 +1,14 @@
 package tmc.tres.payables.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import tmc.tres.payables.model.Disbursement;
 import tmc.tres.payables.model.Payables;
 import tmc.tres.payables.model.PaymentRequest;
 import tmc.tres.payables.model.Release;
+import tmc.tres.payables.model.Status;
 
 public interface Payables_Repo extends JpaRepository<Payables, Integer>{
 	Payables findBypayablesId(long id);
@@ -15,4 +18,6 @@ public interface Payables_Repo extends JpaRepository<Payables, Integer>{
 	Payables findByRelease(Release id);
 	
 	Payables findByPaymentRequest(PaymentRequest id);
+	
+	List<Payables> findByStatus_StatusId(int id);
 }

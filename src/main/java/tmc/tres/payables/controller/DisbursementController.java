@@ -1,5 +1,6 @@
 package tmc.tres.payables.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,16 +177,29 @@ public class DisbursementController {
 
 	}
 
+	@RequestMapping("/getDisbursement/{disbursementId}")
+	@ResponseBody
+	public Disbursement getPaymentRequest(@PathVariable("disbursementId") long disbursementId) {
+		return disbursement_repo.findBydisbursementId(disbursementId);
+	}
+	
 	@GetMapping(path = "/disbursements")
 	@ResponseBody
 	public List<Disbursement> getDisbursements() {
 		return disbursement_repo.findAll();
 	}
-
-	@RequestMapping("/getDisbursement/{disbursementId}")
+	
+	@GetMapping(path = "/disbursements/entries")
 	@ResponseBody
-	public Disbursement getPaymentRequest(@PathVariable("disbursementId") long disbursementId) {
-		return disbursement_repo.findBydisbursementId(disbursementId);
+	public List<Disbursement> getPaymentRequestsByStatus() {
+		List<Disbursement> disbursements = new ArrayList<>();
+		List<Payables> payables = payables_repo.findByStatus_StatusId(3);
+		
+		for(Payables py: payables) {
+			disbursements.add(py.getDisbursement());
+		}
+		
+		return disbursements;
 	}
 
 }
