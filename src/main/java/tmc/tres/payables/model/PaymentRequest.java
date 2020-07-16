@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -55,7 +56,7 @@ public class PaymentRequest {
 	private Designation designation;
 
 	@OneToOne
-	@JoinColumn(name = "sectionId")
+	@JoinColumn(name = "sectionId") 
 	private Section section;
 
 	@OneToOne
