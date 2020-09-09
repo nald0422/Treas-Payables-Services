@@ -1,5 +1,6 @@
 package tmc.tres.payables.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -17,8 +18,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author Leshi
@@ -45,6 +48,16 @@ public class PaymentRequest {
 	private Date dateReceived;
 
 	@Basic
+	@JsonIgnore
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime dateApproved;
+
+	@Basic
+	@JsonIgnore
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime dateDisApproved;
+
+	@Basic
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date dateDue;
 
@@ -56,7 +69,7 @@ public class PaymentRequest {
 	private Designation designation;
 
 	@OneToOne
-	@JoinColumn(name = "sectionId") 
+	@JoinColumn(name = "sectionId")
 	private Section section;
 
 	@OneToOne
@@ -64,9 +77,13 @@ public class PaymentRequest {
 	private Expense expense;
 
 	@OneToOne
-	@JoinColumn(name = "payablesId")
+	@JoinColumn(name = "payablesId", nullable = true)
 	@JsonIgnore
 	private Payables payables;
+
+	@Basic
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime lastModified;
 
 	public long getPaymentRequestNo() {
 		return paymentRequestNo;
@@ -146,6 +163,30 @@ public class PaymentRequest {
 
 	public void setPayables(Payables payables) {
 		this.payables = payables;
+	}
+
+	public LocalDateTime getDateApproved() {
+		return dateApproved;
+	}
+
+	public void setDateApproved(LocalDateTime dateApproved) {
+		this.dateApproved = dateApproved;
+	}
+
+	public LocalDateTime getDateDisApproved() {
+		return dateDisApproved;
+	}
+
+	public void setDateDisApproved(LocalDateTime dateDisApproved) {
+		this.dateDisApproved = dateDisApproved;
+	}
+
+	public LocalDateTime getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(LocalDateTime lastModified) {
+		this.lastModified = lastModified;
 	}
 
 	@Override

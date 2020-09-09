@@ -1,5 +1,6 @@
 package tmc.tres.payables.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -45,6 +46,10 @@ public class Release {
 	@JoinColumn(name = "payablesId")
 	@JsonIgnore
 	private Payables payables;
+
+	@Basic
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime lastModified;
 
 	public long getReleaseId() {
 		return releaseId;
@@ -100,6 +105,14 @@ public class Release {
 
 	public void setPayables(Payables payables) {
 		this.payables = payables;
+	}
+
+	public LocalDateTime getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(LocalDateTime lastModified) {
+		this.lastModified = lastModified;
 	}
 
 	@Override

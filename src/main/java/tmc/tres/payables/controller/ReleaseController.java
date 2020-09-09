@@ -1,5 +1,6 @@
 package tmc.tres.payables.controller;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class ReleaseController {
 		} else {
 
 			Payables payable = new Payables();
-			payable = payables_repo.findByDisbursement(disbursement);
+			payable = payables_repo.findByDisbursement(disbursement).get(0);
 
 			if (payable.getRelease() == null) {
 				Release strRelease = new Release();
@@ -126,6 +127,7 @@ public class ReleaseController {
 
 					// Set Release's Assigned Payable
 					release.setPayables(payable);
+					release.setLastModified(LocalDateTime.now());
 					release_repo.save(release);
 				} else {
 					throw new MultipartException("Releasing Error");
@@ -213,6 +215,7 @@ public class ReleaseController {
 				payables_repo.save(payable);
 
 				release.setPayables(payable);
+				release.setLastModified(LocalDateTime.now());
 				release_repo.save(release);
 			} else {
 				System.out.println("Failed Updating Payable, Please Review Updated Data of Release.");

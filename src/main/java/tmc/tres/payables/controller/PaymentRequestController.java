@@ -1,5 +1,6 @@
 package tmc.tres.payables.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class PaymentRequestController {
 	@ResponseBody
 	public void addPaymentRequest(@RequestBody List<PaymentRequest> paymentRequests) {
 		for (PaymentRequest pr : paymentRequests) {
+			pr.setLastModified(LocalDateTime.now());
 			PaymentRequest pr_container = payment_repo.save(pr);
 
 			// Checks if object is saved successfully
@@ -83,7 +85,40 @@ public class PaymentRequestController {
 			System.out.println("Regular update with payment request id : " + paymentRequest.getPaymentRequestNo());
 		}
 
+		paymentRequest.setLastModified(LocalDateTime.now());
 		paymentRequest.setPayables(payable);
+		payment_repo.save(paymentRequest);
+	}
+	
+	@PutMapping(path="/approvePaymentRequest")
+	@ResponseBody
+	public void approvePaymentRequest(@RequestBody PaymentRequest paymentRequest) {
+		Payables payable = payables_repo.findByPaymentRequest(paymentRequest);
+		
+		Status status = new Status();
+		status.setStatusId(12);
+		
+		payable.setStatus(status);
+		payables_repo.save(payable);
+		
+		paymentRequest.setPayables(payable);
+		paymentRequest.setDateApproved(LocalDateTime.now());
+		payment_repo.save(paymentRequest);
+	}
+	
+	@PutMapping(path="/disapprovePaymentRequest")
+	@ResponseBody
+	public void disapprovePaymentRequest(@RequestBody PaymentRequest paymentRequest) {
+		Payables payable = payables_repo.findByPaymentRequest(paymentRequest);
+		
+		Status status = new Status();
+		status.setStatusId(13);
+		
+		payable.setStatus(status);
+		payables_repo.save(payable);
+		
+		paymentRequest.setPayables(payable);
+		paymentRequest.setDateDisApproved(LocalDateTime.now());
 		payment_repo.save(paymentRequest);
 	}
 
@@ -104,6 +139,32 @@ public class PaymentRequestController {
 	public List<PaymentRequest> getPaymentRequestsByStatus() {
 		List<PaymentRequest> paymentRequests = new ArrayList<>();
 		List<Payables> payables = payables_repo.findByStatus_StatusId(1);
+		
+		for(Payables py: payables) {
+			paymentRequests.add(py.getPaymentRequest());
+		}
+		
+		return paymentRequests;
+	}
+	
+	@GetMapping(path = "/paymentRequests/approval")
+	@ResponseBody
+	public List<PaymentRequest> getPaymentRequestForApproval() {
+		List<PaymentRequest> paymentRequests = new ArrayList<>();
+		List<Payables> payables = payables_repo.findByStatus_StatusId(12);
+		
+		for(Payables py: payables) {
+			paymentRequests.add(py.getPaymentRequest());
+		}
+		
+		return paymentRequests;
+	}
+	
+	@GetMapping(path = "/paymentRequests/returned")
+	@ResponseBody
+	public List<PaymentRequest> getPaymentRequestForReturned() {
+		List<PaymentRequest> paymentRequests = new ArrayList<>();
+		List<Payables> payables = payables_repo.findByStatus_StatusId(13);
 		
 		for(Payables py: payables) {
 			paymentRequests.add(py.getPaymentRequest());

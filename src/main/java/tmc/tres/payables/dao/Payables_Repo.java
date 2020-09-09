@@ -13,7 +13,7 @@ import tmc.tres.payables.model.Status;
 public interface Payables_Repo extends JpaRepository<Payables, Integer>{
 	Payables findBypayablesId(long id);
 	
-	Payables findByDisbursement(Disbursement id);
+	List<Payables> findByDisbursement(Disbursement id);
 	
 	Payables findByRelease(Release id);
 	

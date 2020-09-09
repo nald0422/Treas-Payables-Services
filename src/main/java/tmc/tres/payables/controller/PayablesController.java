@@ -81,11 +81,8 @@ public class PayablesController {
 
 			break;
 		case "disbursement":
-			Disbursement disbursement = new Disbursement();
-
-			disbursement = disbursement_repo.findBydisbursementId(entityId);
-			payable = payables_repo.findByDisbursement(disbursement);
-
+			Disbursement disbursement = disbursement_repo.findBydisbursementId(entityId);
+			payable = disbursement.getPayables();
 			break;
 		case "release":
 			Release release = new Release();
@@ -96,33 +93,37 @@ public class PayablesController {
 		}
 		return payable;
 	}
-	
-	//Verify if release is either ongoing release transaction or no history of release transaction.
-	@PostMapping(path="/verifyRelease")
+
+	// Verify if release is either ongoing release transaction or no history of
+	// release transaction.
+	@PostMapping(path = "/verifyRelease")
 	@ResponseBody
 	public Boolean verifyRelease(@RequestBody Disbursement disbursement) {
-		Payables payable = payables_repo.findByDisbursement(disbursement); 
+		Payables payable = payables_repo.findByDisbursement(disbursement).get(0);
 		Release release = payable.getRelease();
-		
-		if(Objects.isNull(release)) {
+
+		if (Objects.isNull(release)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-	@PostMapping(path="/verifyDisbursement")
+
+	@PostMapping(path = "/verifyDisbursement")
 	@ResponseBody
-	public Boolean verifyDisbursement(@RequestBody PaymentRequest paymentRequest) {
-		Payables payable = payables_repo.findByPaymentRequest(paymentRequest);
-		Disbursement disbursement = payable.getDisbursement();
-		
-		if(Objects.isNull(disbursement)) {
-			return true;
-		} else {
-			System.out.println("Disbursement : " + disbursement.getDisbursementId());
-			return false;
+	public Boolean verifyDisbursement(@RequestBody List<PaymentRequest> paymentRequest) {
+
+		boolean res = false;
+
+		for (PaymentRequest pr : paymentRequest) {
+			Payables payable = payables_repo.findByPaymentRequest(pr);
+			Disbursement disbursement = payable.getDisbursement();
+
+			if (Objects.isNull(disbursement)) {
+				res = true;
+			}
 		}
+		return res;
 	}
 
 }
