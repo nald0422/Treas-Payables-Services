@@ -15,7 +15,6 @@ import tmc.tres.payables.dao.BankBranch_Repo;
 import tmc.tres.payables.dao.Bank_Repo;
 import tmc.tres.payables.model.Bank;
 import tmc.tres.payables.model.BankBranch;
-import tmc.tres.payables.model.Designation;
 
 @RestController
 public class BankController {

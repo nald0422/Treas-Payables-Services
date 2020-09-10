@@ -1,8 +1,7 @@
 package tmc.tres.payables.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import tmc.tres.payables.dao.Payables_Repo;
 import tmc.tres.payables.dao.Payment_Repo;
 import tmc.tres.payables.model.Disbursement;
 import tmc.tres.payables.model.Payables;
-import tmc.tres.payables.model.PaymentRequest;
-import tmc.tres.payables.model.Release;
 import tmc.tres.payables.model.Status;
 
 @RestController
@@ -40,12 +37,6 @@ public class DisbursementController {
 	@PostMapping(path = "/disburse")
 	@ResponseBody
 	public void addDisbursement(@RequestBody Disbursement disbursement) {
-		Disbursement strDisbursement = new Disbursement();
-
-		System.out.println("Disbursement : " + disbursement);
-
-		List<PaymentRequest> paymentRequests = new ArrayList<>();
-
 		boolean disbursementOperationSave = true;
 
 		try {
@@ -72,7 +63,7 @@ public class DisbursementController {
 				payables_repo.save(payable);
 
 				disbursement.setPayables(payable);
-				disbursement.setLastModified(LocalDateTime.now());
+				disbursement.setLastModified(Calendar.getInstance().getTime());
 				disbursement_repo.save(disbursement);
 			}
 
@@ -97,7 +88,7 @@ public class DisbursementController {
 			} else {
 				status.setStatusId(10);
 				payable.setStatus(status);
-			} 
+			}
 			break;
 		case "update":
 			status.setStatusId(payable.getStatus().getStatusId());
@@ -106,7 +97,7 @@ public class DisbursementController {
 		case "hold":
 			status.setStatusId(8);
 			payable.setStatus(status);
-		break;
+			break;
 		case "forReleasing":
 			status.setStatusId(2);
 			payable.setStatus(status);
@@ -128,7 +119,7 @@ public class DisbursementController {
 		if (opPayable == true) {
 			// Set Disbursement's assigned Payable
 			disbursement.setPayables(payable);
-			disbursement.setLastModified(LocalDateTime.now());
+			disbursement.setLastModified(Calendar.getInstance().getTime());
 			disbursement_repo.save(disbursement);
 		} else {
 			System.out.println("Failed Updating Payable, Please Review Updated Data of Disbursement.");
@@ -161,4 +152,36 @@ public class DisbursementController {
 		return disbursements;
 	}
 
+	@GetMapping(path = "/disbursements/forReleasing")
+	@ResponseBody
+	public List<Disbursement> getDisbursementsByForReleasing() {
+		List<Disbursement> disbursements = new ArrayList<>();
+		List<Payables> payables = payables_repo.findByStatus_StatusId(2);
+
+		for (Payables py : payables) {
+			disbursements.add(py.getDisbursement());
+		}
+
+		return disbursements;
+	}
+
+	@GetMapping(path = "/disbursements/disbursed")
+	@ResponseBody
+	public List<Disbursement> getDisbursementsByApproved() {
+		List<Disbursement> disbursements = disbursement_repo.findAll();
+		List<Disbursement> disbursements_container = new ArrayList<Disbursement>();
+
+		if (disbursements.size() != 0) {
+			for (Disbursement db : disbursements) {
+				Payables payable = new Payables();
+				db.setPayables(payables_repo.findByDisbursement(db).get(0));
+
+				if (db.getPayables().getStatus().getStatusId() == 3) {
+					disbursements_container.add(db);
+				}
+			}
+		}
+
+		return disbursements_container;
+	}
 }

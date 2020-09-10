@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tmc.tres.payables.dao.Designation_Repo;
 import tmc.tres.payables.model.Designation;
-import tmc.tres.payables.model.Expense;
 
 @RestController
 public class DesignationController {

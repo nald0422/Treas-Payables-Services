@@ -1,7 +1,7 @@
 package tmc.tres.payables.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class PaymentRequestController {
 	@ResponseBody
 	public void addPaymentRequest(@RequestBody List<PaymentRequest> paymentRequests) {
 		for (PaymentRequest pr : paymentRequests) {
-			pr.setLastModified(LocalDateTime.now());
+			pr.setLastModified(Calendar.getInstance().getTime());
 			PaymentRequest pr_container = payment_repo.save(pr);
 
 			// Checks if object is saved successfully
@@ -85,7 +85,7 @@ public class PaymentRequestController {
 			System.out.println("Regular update with payment request id : " + paymentRequest.getPaymentRequestNo());
 		}
 
-		paymentRequest.setLastModified(LocalDateTime.now());
+		paymentRequest.setLastModified(Calendar.getInstance().getTime());
 		paymentRequest.setPayables(payable);
 		payment_repo.save(paymentRequest);
 	}
@@ -102,7 +102,7 @@ public class PaymentRequestController {
 		payables_repo.save(payable);
 		
 		paymentRequest.setPayables(payable);
-		paymentRequest.setDateApproved(LocalDateTime.now());
+		paymentRequest.setDateApproved(Calendar.getInstance().getTime());
 		payment_repo.save(paymentRequest);
 	}
 	
@@ -118,7 +118,7 @@ public class PaymentRequestController {
 		payables_repo.save(payable);
 		
 		paymentRequest.setPayables(payable);
-		paymentRequest.setDateDisApproved(LocalDateTime.now());
+		paymentRequest.setDateDisApproved(Calendar.getInstance().getTime());
 		payment_repo.save(paymentRequest);
 	}
 

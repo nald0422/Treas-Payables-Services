@@ -1,27 +1,20 @@
 package tmc.tres.payables.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author Leshi
@@ -49,13 +42,13 @@ public class PaymentRequest {
 
 	@Basic
 	@JsonIgnore
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	private LocalDateTime dateApproved;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private Date dateApproved;
 
 	@Basic
 	@JsonIgnore
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	private LocalDateTime dateDisApproved;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private Date dateDisApproved;
 
 	@Basic
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -83,7 +76,7 @@ public class PaymentRequest {
 
 	@Basic
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	private LocalDateTime lastModified;
+	private Date lastModified;
 
 	public long getPaymentRequestNo() {
 		return paymentRequestNo;
@@ -165,27 +158,27 @@ public class PaymentRequest {
 		this.payables = payables;
 	}
 
-	public LocalDateTime getDateApproved() {
+	public Date getDateApproved() {
 		return dateApproved;
 	}
 
-	public void setDateApproved(LocalDateTime dateApproved) {
+	public void setDateApproved(Date dateApproved) {
 		this.dateApproved = dateApproved;
 	}
 
-	public LocalDateTime getDateDisApproved() {
+	public Date getDateDisApproved() {
 		return dateDisApproved;
 	}
 
-	public void setDateDisApproved(LocalDateTime dateDisApproved) {
+	public void setDateDisApproved(Date dateDisApproved) {
 		this.dateDisApproved = dateDisApproved;
 	}
 
-	public LocalDateTime getLastModified() {
+	public Date getLastModified() {
 		return lastModified;
 	}
 
-	public void setLastModified(LocalDateTime lastModified) {
+	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
 

@@ -1,10 +1,8 @@
 package tmc.tres.payables.controller;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +15,9 @@ import org.springframework.web.multipart.MultipartException;
 
 import tmc.tres.payables.dao.Disbursement_Repo;
 import tmc.tres.payables.dao.Payables_Repo;
-import tmc.tres.payables.dao.Payment_Repo;
 import tmc.tres.payables.dao.Release_Repo;
 import tmc.tres.payables.model.Disbursement;
 import tmc.tres.payables.model.Payables;
-import tmc.tres.payables.model.PaymentRequest;
 import tmc.tres.payables.model.Release;
 import tmc.tres.payables.model.Status;
 
@@ -127,7 +123,7 @@ public class ReleaseController {
 
 					// Set Release's Assigned Payable
 					release.setPayables(payable);
-					release.setLastModified(LocalDateTime.now());
+					release.setLastModified(Calendar.getInstance().getTime());
 					release_repo.save(release);
 				} else {
 					throw new MultipartException("Releasing Error");
@@ -215,7 +211,7 @@ public class ReleaseController {
 				payables_repo.save(payable);
 
 				release.setPayables(payable);
-				release.setLastModified(LocalDateTime.now());
+				release.setLastModified(Calendar.getInstance().getTime());
 				release_repo.save(release);
 			} else {
 				System.out.println("Failed Updating Payable, Please Review Updated Data of Release.");

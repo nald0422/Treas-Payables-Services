@@ -1,7 +1,6 @@
 package tmc.tres.payables.model;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
